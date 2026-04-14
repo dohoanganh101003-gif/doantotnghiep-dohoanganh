@@ -1,0 +1,47 @@
+.status {
+    padding: 4px 10px;
+    border-radius: 10px;
+    font-size: 13px;
+}
+
+.pending {
+    background: #facc15;
+    color: black;
+}
+
+.active {
+    background: #22c55e;
+    color: white;
+}
+
+.role.admin {
+    color: #ef4444;
+    font-weight: bold;
+}
+
+.role.owner {
+    color: #3b82f6;
+    font-weight: bold;
+}
+
+.role.user {
+    color: #64748b;
+}
+
+.btn-approve {
+    background: #22c55e;
+}
+
+.btn-approve:hover {
+    background: #16a34a;
+}
+
+form {
+    display: inline-block;
+}
+
+select {
+    padding: 4px;
+    border-radius: 6px;
+    margin-bottom: 5px;
+}

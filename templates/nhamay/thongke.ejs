@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Thống kê</title>
+    <link rel="stylesheet" href="/css/danhsach.css">
+    <link rel="stylesheet" href="/css/thongke.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+    <div class="header">
+        <h2>Thống kê nhà máy</h2>
+
+        <div>
+            <a href="/" class="btn">Trang chủ</a>
+            <a href="/nhamay" class="btn">Danh sách</a>
+        </div>
+    </div>
+
+    <div class="table-container">
+
+        <div class="stats-box">
+            <h3>Tổng số nhà máy: <%= stats.total %>
+            </h3>
+            <h3>Tổng công suất: <%= stats.total_power || 0 %> MW</h3>
+        </div>
+
+        <div class="chart-container">
+
+            <div class="chart-box">
+                <h3>Trạng thái</h3>
+                <canvas id="statusChart"></canvas>
+            </div>
+
+            <div class="chart-box">
+                <h3>Khu vực</h3>
+                <canvas id="regionChart"></canvas>
+            </div>
+
+            <div class="chart-box full">
+                <h3>Theo tỉnh</h3>
+                <canvas id="provinceChart"></canvas>
+            </div>
+
+        </div>
+
+        <script>
+            window.stats = <%- JSON.stringify(stats || {}) %>;
+            window.regionStats = <%- JSON.stringify(regionStats || []) %>;
+            window.provinceStats = <%- JSON.stringify(provinceStats || []) %>;
+        </script>
+
+
+
+        <script src="/scripts/thongke.js"></script>
+
+</body>
+
+</html>

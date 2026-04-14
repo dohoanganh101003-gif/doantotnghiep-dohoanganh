@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nhà máy điện</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-draw/dist/leaflet.draw.css" />
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+    <div class="header">
+
+        <div class="left">
+            <button id="toggleBtn">☰</button>
+            <h2>Nhà máy điện</h2>
+        </div>
+
+        <div>
+            <% if (!user) { %>
+                <a href="/dangnhap" class="btn">Đăng nhập</a>
+                <a href="/dangky" class="btn">Đăng ký</a>
+                <% } else { %>
+                    <span class="user-info <%= user.role %>">
+                        👤 <%= user.username %> (<%= user.role %>)
+                    </span>
+                    <a href="/auth/logout" class="btn logout">Đăng xuất</a>
+                    <% } %>
+        </div>
+
+    </div>
+
+    <div class="sidebar" id="sidebar">
+
+        <h3>Tìm kiếm nhà máy</h3>
+
+        <% if (!user) { %>
+            <p class="hint">Đăng nhập để dùng đầy đủ chức năng</p>
+            <% } %>
+
+                <input type="text" id="search" placeholder="Tên nhà máy...">
+
+                <div class="btn-group">
+                    <button onclick="searchPlant()">Tìm</button>
+                    <button onclick="resetMap()">Reset</button>
+
+                </div>
+
+                <div class="layer-toggle">
+                    <label>
+                        <input type="checkbox" id="togglePoint" checked>
+                        Điểm
+                    </label>
+                </div>
+
+                <div class="layer-toggle">
+                    <label>
+                        <input type="checkbox" id="togglePolygon" checked>
+                        Vùng
+                    </label>
+                </div>
+
+
+                <hr>
+
+                <a href="/nhamay" class="sidebar-btn">Danh sách nhà máy</a>
+
+                <% if (user && (user.role==="admin" || user.role==="owner" )) { %>
+                    <a href="/thongke" class="sidebar-btn">
+                        Thống kê
+                    </a>
+                    <% } %>
+
+                        <% if (user && (user.role==="admin" || user.role==="owner" )) { %>
+                            <a href="/themnhamay" class="sidebar-btn">Thêm nhà máy</a>
+                            <% } %>
+
+                                <% if (user && user.role==="admin" ) { %>
+                                    <a href="/auth/admin/users" class="sidebar-btn">
+                                        Quản lý người dùng
+                                    </a>
+                                    <% } %>
+
+
+    </div>
+
+    <div id="map"></div>
+    <div id="statsPanel" class="stats-panel hidden">
+
+        <h3>Thống kê</h3>
+
+        <canvas id="statusChart"></canvas>
+        <canvas id="regionChart"></canvas>
+
+    </div>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-draw/dist/leaflet.draw.js"></script>
+    <script src="/scripts/trangchu.js"></script>
+
+</body>
+
+</html>

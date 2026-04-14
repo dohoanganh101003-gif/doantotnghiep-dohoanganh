@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Thêm nhà máy</title>
+    <link rel="stylesheet" href="/css/themnhamay.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+</head>
+
+<body>
+
+    <div class="header">
+        <h2>Thêm nhà máy</h2>
+        <a href="/" class="btn">← Trang chủ</a>
+    </div>
+
+    <div class="container">
+
+        <!-- FORM -->
+        <div class="form-container">
+            <form id="formAdd">
+
+                <input type="text" id="ten_nha_may" name="ten_nha_may" placeholder="Tên nhà máy" required>
+
+                <input type="number" id="cong_suat" name="cong_suat" placeholder="Công suất (MW)" required>
+
+                <select id="status" name="trang_thai" required>
+                    <option value="">Chọn trạng thái</option>
+                    <option value="Hoạt động">Hoạt động</option>
+                    <option value="Bảo trì">Bảo trì</option>
+                    <option value="Ngừng">Ngừng</option>
+                </select>
+
+                <select name="tinh" id="tinh" required onchange="updateRegion()">
+                    <option value="">-- Chọn tỉnh/thành --</option>
+
+                    <option value="Tuyên Quang">Tuyên Quang</option>
+                    <option value="Lào Cai">Lào Cai</option>
+                    <option value="Thái Nguyên">Thái Nguyên</option>
+                    <option value="Phú Thọ">Phú Thọ</option>
+                    <option value="Bắc Ninh">Bắc Ninh</option>
+                    <option value="Hưng Yên">Hưng Yên</option>
+                    <option value="Hải Phòng">Hải Phòng</option>
+                    <option value="Ninh Bình">Ninh Bình</option>
+                    <option value="Quảng Trị">Quảng Trị</option>
+                    <option value="Đà Nẵng">Đà Nẵng</option>
+                    <option value="Quảng Ngãi">Quảng Ngãi</option>
+                    <option value="Gia Lai">Gia Lai</option>
+                    <option value="Khánh Hoà">Khánh Hoà</option>
+                    <option value="Lâm Đồng">Lâm Đồng</option>
+                    <option value="Đắk Lắk">Đắk Lắk</option>
+                    <option value="Hồ Chí Minh">Hồ Chí Minh</option>
+                    <option value="Đồng Nai">Đồng Nai</option>
+                    <option value="Tây Ninh">Tây Ninh</option>
+                    <option value="Cần Thơ">Cần Thơ</option>
+                    <option value="Vĩnh Long">Vĩnh Long</option>
+                    <option value="Đồng Tháp">Đồng Tháp</option>
+                    <option value="Cà Mau">Cà Mau</option>
+                    <option value="An Giang">An Giang</option>
+                    <option value="Hà Nội">Hà Nội</option>
+                    <option value="Huế">Huế</option>
+                    <option value="Lai Châu">Lai Châu</option>
+                    <option value="Điện Biên">Điện Biên</option>
+                    <option value="Sơn La">Sơn La</option>
+                    <option value="Lạng Sơn">Lạng Sơn</option>
+                    <option value="Quảng Ninh">Quảng Ninh</option>
+                    <option value="Thanh Hoá">Thanh Hoá</option>
+                    <option value="Nghệ An">Nghệ An</option>
+                    <option value="Hà Tĩnh">Hà Tĩnh</option>
+                    <option value="Cao Bằng">Cao Bằng</option>
+                </select>
+
+
+                <input type="text" id="khu_vuc" name="khu_vuc" placeholder="Khu vực" required>
+                <input type="text" id="lat" name="lat" placeholder="Vĩ độ" required>
+                <input type="text" id="lng" name="lng" placeholder="Kinh độ" required>
+                <input type="file" id="image" name="image" accept="image/*">
+                <div class="preview-box">
+                    <img id="preview">
+                </div>
+
+                <button type="submit">Thêm nhà máy</button>
+            </form>
+        </div>
+
+        <div id="map"></div>
+
+    </div>
+
+    <script>
+        const regionMap = {
+            "Tuyên Quang": "Miền Bắc",
+            "Lào Cai": "Miền Bắc",
+            "Thái Nguyên": "Miền Bắc",
+            "Phú Thọ": "Miền Bắc",
+            "Bắc Ninh": "Miền Bắc",
+            "Hưng Yên": "Miền Bắc",
+            "Hải Phòng": "Miền Bắc",
+            "Ninh Bình": "Miền Bắc",
+            "Hà Nội": "Miền Bắc",
+            "Lai Châu": "Miền Bắc",
+            "Điện Biên": "Miền Bắc",
+            "Sơn La": "Miền Bắc",
+            "Lạng Sơn": "Miền Bắc",
+            "Quảng Ninh": "Miền Bắc",
+            "Cao Bằng": "Miền Bắc",
+
+            "Thanh Hoá": "Miền Trung",
+            "Nghệ An": "Miền Trung",
+            "Hà Tĩnh": "Miền Trung",
+            "Quảng Trị": "Miền Trung",
+            "Huế": "Miền Trung",
+            "Đà Nẵng": "Miền Trung",
+            "Quảng Ngãi": "Miền Trung",
+            "Khánh Hoà": "Miền Trung",
+            "Gia Lai": "Miền Trung",
+            "Lâm Đồng": "Miền Trung",
+            "Đắk Lắk": "Miền Trung",
+
+            "Hồ Chí Minh": "Miền Nam",
+            "Đồng Nai": "Miền Nam",
+            "Tây Ninh": "Miền Nam",
+            "Cần Thơ": "Miền Nam",
+            "Vĩnh Long": "Miền Nam",
+            "Đồng Tháp": "Miền Nam",
+            "Cà Mau": "Miền Nam",
+            "An Giang": "Miền Nam"
+        };
+
+        function updateRegion() {
+            const tinh = document.getElementById("tinh").value;
+            document.getElementById("khu_vuc").value = regionMap[tinh] || "";
+        }
+    </script>
+
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="/scripts/themnhamay.js"></script>
+
+</body>
+
+
+</html>

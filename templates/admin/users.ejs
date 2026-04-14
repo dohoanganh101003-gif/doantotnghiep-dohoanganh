@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lý tài khoản</title>
+    <link rel="stylesheet" href="/css/danhsach.css">
+    <link rel="stylesheet" href="/css/quanlytaikhoan.css">
+</head>
+
+<body>
+    <div class="header">
+        <h2>Quản lý tài khoản</h2>
+
+        <div>
+            <a href="/" class="btn">Trang chủ</a>
+            <a href="/danhsach" class="btn">Nhà máy</a>
+        </div>
+    </div>
+
+    <div class="table-container">
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Status</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <% users.forEach(u=> { %>
+                    <tr>
+                        <td>
+                            <%= u.id %>
+                        </td>
+                        <td>
+                            <%= u.username %>
+                        </td>
+                        <td>
+                            <%= u.email %>
+                        </td>
+
+                        <!-- ROLE -->
+                        <td>
+                            <span class="role <%= u.role %>">
+                                <%= u.role %>
+                            </span>
+                        </td>
+
+                        <!-- STATUS -->
+                        <td>
+                            <span class="status <%= u.status %>">
+                                <%= u.status %>
+                            </span>
+                        </td>
+
+                        <td>
+                            <% if (u.status==="pending" ) { %>
+
+                                <form action="/auth/admin/approve/<%= u.id %>" method="POST">
+                                    <select name="role">
+                                        <option value="user">User</option>
+                                        <option value="owner">Owner</option>
+                                    </select>
+
+                                    <button class="action-btn btn-approve">
+                                        Duyệt
+                                    </button>
+                                </form>
+
+                                <form action="/auth/admin/delete/<%= u.id %>" method="POST">
+                                    <button class="action-btn btn-delete">
+                                        Xoá
+                                    </button>
+                                </form>
+
+                                <% } else { %>
+                                    <span style="color: #22c55e;">✔ Đã duyệt</span>
+                                    <% } %>
+                        </td>
+                    </tr>
+                    <% }) %>
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>
