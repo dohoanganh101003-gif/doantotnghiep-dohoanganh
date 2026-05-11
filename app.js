@@ -30,7 +30,6 @@ app.use(express.static("public"));
 const mapRoutes = require("./routes/map");
 const authRoutes = require("./routes/auth");
 const nhaMayRoutes = require("./routes/nhamay");
-const PlantController = require("./controllers/plantController");
 
 app.use("/nhamay", nhaMayRoutes);
 app.use("/api", mapRoutes);
@@ -50,9 +49,6 @@ app.get("/dangky_admin", (req, res) => {
 app.get("/dangky", (req, res) => {
   res.render("dangky");
 });
-app.get("/themnhamay", PlantController.pageAdd);
-app.get("/danhsach", PlantController.pageList);
-app.get("/thongke", PlantController.pageStats);
 
 app.use((err, req, res, next) => {
   console.error(err.stack);

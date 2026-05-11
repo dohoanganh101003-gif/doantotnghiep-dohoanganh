@@ -38,14 +38,14 @@ document.addEventListener("DOMContentLoaded", function () {
       formData.append("image", file);
     }
 
-    fetch(`/api/solar/${id}`, {
+    fetch(`/api/plants/${id}`, {
       method: "PUT",
       body: formData,
     })
       .then((res) => res.text())
       .then((msg) => {
         alert(msg);
-        window.location.href = "/danhsach";
+        window.location.href = "/nhamay";
       })
       .catch((err) => {
         console.error(err);

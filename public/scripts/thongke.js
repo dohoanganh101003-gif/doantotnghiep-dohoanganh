@@ -25,16 +25,3 @@ new Chart(document.getElementById("regionChart"), {
     ],
   },
 });
-
-new Chart(document.getElementById("provinceChart"), {
-  type: "pie",
-  data: {
-    labels: provinceStats.map((p) => p.tinh || "Chưa có"),
-    datasets: [
-      {
-        label: "Số nhà máy",
-        data: provinceStats.map((p) => p.count),
-      },
-    ],
-  },
-});

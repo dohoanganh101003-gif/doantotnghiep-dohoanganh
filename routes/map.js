@@ -3,23 +3,25 @@ const router = express.Router();
 const axios = require("axios");
 const upload = require("../middleware/upload");
 
-const PlantController = require("../controllers/plantController");
+const crud = require("../controllers/plant/plantCrudController");
+const stats = require("../controllers/plant/plantStatsController");
 
-// ================= API DB =================
-router.get("/all-db", PlantController.getAll);
-router.get("/search", PlantController.search);
-router.post("/solar", upload.single("image"), PlantController.create);
-router.delete("/solar/:id", PlantController.delete);
-router.put("/solar/:id", upload.single("image"), PlantController.update);
-router.get("/api/stats", PlantController.apiStats);
+// ===== CRUD =====
+router.get("/plants", crud.getAll);
+router.get("/plants/search", crud.search);
+router.post("/plants", upload.single("image"), crud.create);
+router.put("/plants/:id", upload.single("image"), crud.update);
+router.delete("/plants/:id", crud.delete);
 
+// ===== STATS =====
+router.get("/stats", stats.apiStats);
+
+// ===== GEOSERVER =====
 router.get("/geoserver", async (req, res) => {
   try {
     const response = await axios.get(
       "http://localhost:8080/geoserver/nhamay/wms",
-      {
-        params: req.query,
-      },
+      { params: req.query },
     );
 
     res.json(response.data);

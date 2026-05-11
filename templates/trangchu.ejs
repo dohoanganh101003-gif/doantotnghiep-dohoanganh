@@ -44,9 +44,8 @@
                 <input type="text" id="search" placeholder="Tên nhà máy...">
 
                 <div class="btn-group">
-                    <button onclick="searchPlant()">Tìm</button>
-                    <button onclick="resetMap()">Reset</button>
-
+                    <button id="btnSearch">Tìm</button>
+                    <button id="btnReset">Reset</button>
                 </div>
 
                 <div class="layer-toggle">
@@ -69,13 +68,13 @@
                 <a href="/nhamay" class="sidebar-btn">Danh sách nhà máy</a>
 
                 <% if (user && (user.role==="admin" || user.role==="owner" )) { %>
-                    <a href="/thongke" class="sidebar-btn">
+                    <a href="/nhamay/thongke" class="sidebar-btn">
                         Thống kê
                     </a>
                     <% } %>
 
                         <% if (user && (user.role==="admin" || user.role==="owner" )) { %>
-                            <a href="/themnhamay" class="sidebar-btn">Thêm nhà máy</a>
+                            <a href="/nhamay/them" class="sidebar-btn">Thêm nhà máy</a>
                             <% } %>
 
                                 <% if (user && user.role==="admin" ) { %>
@@ -99,7 +98,9 @@
 
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet-draw/dist/leaflet.draw.js"></script>
-    <script src="/scripts/trangchu.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="module" src="/scripts/trangchu/main.js"></script>
+
 
 </body>
 

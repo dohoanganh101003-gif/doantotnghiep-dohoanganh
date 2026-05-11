@@ -1,7 +1,7 @@
 function xoa(id) {
   if (!confirm("Bạn có chắc muốn xoá?")) return;
 
-  fetch("/api/solar/" + id, {
+  fetch("/api/plants/" + id, {
     method: "DELETE",
   })
     .then((res) => res.text())

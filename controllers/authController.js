@@ -2,7 +2,6 @@ const bcrypt = require("bcrypt");
 const UserModel = require("../models/userModel");
 
 const AuthController = {
-
   register: async (req, res) => {
     try {
       const { username, password, email, phone } = req.body;
@@ -23,7 +22,6 @@ const AuthController = {
 
       const hash = await bcrypt.hash(password, 10);
 
-      // 👉 user mặc định = pending
       await UserModel.create(username, hash, email, phone, "user", "pending");
 
       res.send("Đăng ký thành công! Chờ admin duyệt.");
@@ -33,14 +31,10 @@ const AuthController = {
     }
   },
 
-
   registerAdmin: async (req, res) => {
     try {
       const { username, password, email, phone } = req.body;
-
       const hash = await bcrypt.hash(password, 10);
-
-      // 👉 admin = active luôn
       await UserModel.create(username, hash, email, phone, "admin", "active");
 
       res.send("Tạo admin thành công");
@@ -49,7 +43,6 @@ const AuthController = {
       res.status(500).send("Lỗi đăng ký admin");
     }
   },
-
 
   login: async (req, res) => {
     try {
@@ -61,7 +54,6 @@ const AuthController = {
       const match = await bcrypt.compare(password, user.password);
       if (!match) return res.send("Sai mật khẩu");
 
-      //CHẶN nếu chưa duyệt
       if (user.status !== "active") {
         return res.send("Tài khoản chưa được admin duyệt!");
       }
@@ -93,7 +85,6 @@ const AuthController = {
     }
   },
 
-
   approveUser: async (req, res) => {
     try {
       const id = req.params.id;
@@ -107,7 +98,6 @@ const AuthController = {
       res.send("Lỗi duyệt");
     }
   },
-
 
   deleteUser: async (req, res) => {
     try {

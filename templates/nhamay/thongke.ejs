@@ -40,17 +40,12 @@
                 <canvas id="regionChart"></canvas>
             </div>
 
-            <div class="chart-box full">
-                <h3>Theo tỉnh</h3>
-                <canvas id="provinceChart"></canvas>
-            </div>
-
+            
         </div>
 
         <script>
             window.stats = <%- JSON.stringify(stats || {}) %>;
             window.regionStats = <%- JSON.stringify(regionStats || []) %>;
-            window.provinceStats = <%- JSON.stringify(provinceStats || []) %>;
         </script>
 
 

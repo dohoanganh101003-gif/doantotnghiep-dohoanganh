@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const formData = new FormData(form);
 
-    fetch("/api/solar", {
+    fetch("/api/plants", {
       method: "POST",
       body: formData,
     })
