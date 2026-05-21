@@ -55,7 +55,6 @@ document.addEventListener("DOMContentLoaded", function () {
       });
   });
 
-  // preview ảnh
   document.getElementById("image").addEventListener("change", function () {
     const file = this.files[0];
     if (file) {

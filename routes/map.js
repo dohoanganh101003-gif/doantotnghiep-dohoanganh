@@ -5,18 +5,18 @@ const upload = require("../middleware/upload");
 
 const crud = require("../controllers/plant/plantCrudController");
 const stats = require("../controllers/plant/plantStatsController");
+const log = require("../controllers/plant/plantLogController"); // ✅ thêm
 
-// ===== CRUD =====
 router.get("/plants", crud.getAll);
 router.get("/plants/search", crud.search);
 router.post("/plants", upload.single("image"), crud.create);
 router.put("/plants/:id", upload.single("image"), crud.update);
 router.delete("/plants/:id", crud.delete);
 
-// ===== STATS =====
+router.get("/plants/:id/logs", log.getLogs); // popup bản đồ
+router.get("/plants/:id/logs/lazy", log.getLogsLazy); // ✅ lazy load trang lịch sử
 router.get("/stats", stats.apiStats);
 
-// ===== GEOSERVER =====
 router.get("/geoserver", async (req, res) => {
   try {
     const response = await axios.get(

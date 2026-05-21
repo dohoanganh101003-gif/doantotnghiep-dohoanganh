@@ -111,6 +111,35 @@ const AuthController = {
       res.send("Lỗi xoá");
     }
   },
+  adminCreateUser: async (req, res) => {
+    try {
+      const { username, password, email, phone, role } = req.body;
+
+      if (!username || !password || !email || !phone || !role) {
+        return res
+          .status(400)
+          .json({ error: "Vui lòng nhập đầy đủ thông tin" });
+      }
+
+      const existingUser = await UserModel.findByUsername(username);
+      if (existingUser) {
+        return res.status(400).json({ error: "Username đã tồn tại" });
+      }
+
+      const existingEmail = await UserModel.findByEmail(email);
+      if (existingEmail) {
+        return res.status(400).json({ error: "Email đã tồn tại" });
+      }
+
+      const hash = await bcrypt.hash(password, 10);
+      await UserModel.create(username, hash, email, phone, role, "active");
+
+      res.json({ success: "Tạo tài khoản thành công!" });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: "Lỗi tạo tài khoản" });
+    }
+  },
 
   logout: (req, res) => {
     req.session.destroy(() => {

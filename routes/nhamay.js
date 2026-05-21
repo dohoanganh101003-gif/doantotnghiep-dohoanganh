@@ -3,13 +3,13 @@ const router = express.Router();
 
 const view = require("../controllers/plant/plantViewController");
 const stats = require("../controllers/plant/plantStatsController");
+const log = require("../controllers/plant/plantLogController");
 
-// ===== VIEW =====
 router.get("/", view.pageList);
 router.get("/them", view.pageAdd);
 router.get("/sua/:id", view.pageEdit);
 
-// ===== STATS PAGE =====
 router.get("/thongke", stats.pageStats);
+router.get("/lichsu", log.pageList);
 
 module.exports = router;

@@ -11,6 +11,7 @@ module.exports = {
         n.owner_id,
         n.tinh,
         n.khu_vuc,
+        n.ngay_hoat_dong,
         l.ten_loai,
         ST_Y(n.vi_tri) as lat,
         ST_X(n.vi_tri) as lng,
@@ -53,13 +54,14 @@ module.exports = {
       tinh,
       khu_vuc,
       image,
+      ngay_hoat_dong,
     } = data;
 
     const result = await pool.query(
       `
       INSERT INTO nhamay_dien 
-      (ten_nha_may, cong_suat, trang_thai, vi_tri, owner_id, tinh, khu_vuc, image)
-      VALUES ($1, $2, $3, ST_SetSRID(ST_MakePoint($5, $4), 4326), $6, $7, $8, $9)
+      (ten_nha_may, cong_suat, trang_thai, vi_tri, owner_id, tinh, khu_vuc, image, ngay_hoat_dong)
+      VALUES ($1, $2, $3, ST_SetSRID(ST_MakePoint($5, $4), 4326), $6, $7, $8, $9, $10)
       RETURNING id
     `,
       [
@@ -72,6 +74,7 @@ module.exports = {
         tinh,
         khu_vuc,
         image,
+        ngay_hoat_dong || null,
       ],
     );
 
@@ -83,7 +86,15 @@ module.exports = {
   },
 
   update: async (id, data) => {
-    const { ten_nha_may, cong_suat, trang_thai, tinh, khu_vuc, image } = data;
+    const {
+      ten_nha_may,
+      cong_suat,
+      trang_thai,
+      tinh,
+      khu_vuc,
+      image,
+      ngay_hoat_dong,
+    } = data;
 
     if (image) {
       await pool.query(
@@ -94,10 +105,20 @@ module.exports = {
             trang_thai = $3,
             tinh = $4,
             khu_vuc = $5,
-            image = $6
-        WHERE id = $7
+            image = $6,
+            ngay_hoat_dong = $7
+        WHERE id = $8
       `,
-        [ten_nha_may, cong_suat, trang_thai, tinh, khu_vuc, image, id],
+        [
+          ten_nha_may,
+          cong_suat,
+          trang_thai,
+          tinh,
+          khu_vuc,
+          image,
+          ngay_hoat_dong || null,
+          id,
+        ],
       );
     } else {
       await pool.query(
@@ -107,10 +128,11 @@ module.exports = {
             cong_suat = $2,
             trang_thai = $3,
             tinh = $4,
-            khu_vuc = $5
-        WHERE id = $6
+            khu_vuc = $5,
+            ngay_hoat_dong = $6
+        WHERE id = $7
       `,
-        [ten_nha_may, cong_suat, trang_thai, tinh, khu_vuc, id],
+        [ten_nha_may, cong_suat, trang_thai, tinh, khu_vuc, ngay_hoat_dong || null, id],
       );
     }
   },

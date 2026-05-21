@@ -19,65 +19,65 @@
                 <a href="/nhamay/them" class="btn">Thêm</a>
                 <% } %>
         </div>
-
     </div>
 
     <div class="table-container">
-
         <table>
             <thead>
                 <tr>
                     <th>ID</th>
                     <th>Tên nhà máy</th>
-                    <th>Công suất</th>
+                    <th>Công suất (MW)</th>
                     <th>Trạng thái</th>
-                    <th>Vĩ độ</th>
-                    <th>Kinh độ</th>
+                    <th>Ngày hoạt động</th>
+                    <th>Thời gian HĐ</th>
                     <th>Hành động</th>
                 </tr>
             </thead>
 
             <tbody>
                 <% plants.forEach(p=> { %>
-                    <tr>
-                        <td>
-                            <%= p.id %>
-                        </td>
-                        <td>
-                            <%= p.ten_nha_may %>
-                        </td>
-                        <td>
-                            <%= p.cong_suat %>
-                        </td>
-                        <td>
-                            <%= p.trang_thai %>
-                        </td>
-                        <td>
-                            <%= p.lat %>
-                        </td>
-                        <td>
-                            <%= p.lng %>
-                        </td>
-
-                        <td>
-                            <% if (user && (user.role==="admin" || user.id===p.owner_id)) { %>
-                                <a href="/nhamay/sua/<%= p.id %>" class="action-btn btn-edit">Sửa</a>
-
-                                <button class="action-btn btn-delete" onclick="xoa(<%= p.id %>)">
-                                    Xoá
-                                </button>
-                                <% } else { %>
-                                    <span style="color: gray;">Chỉ xem</span>
-                                    <% } %>
-                        </td>
-
-                    </tr>
-                    <% }) %>
+                    <% var thoiGian='—' ; if (p.ngay_hoat_dong) { var ms=Date.now() - new Date(p.ngay_hoat_dong); var
+                        years=Math.floor(ms / (1000*60*60*24*365)); var months=Math.floor((ms % (1000*60*60*24*365)) /
+                        (1000*60*60*24*30)); thoiGian=(years> 0 ? years + ' năm ' : '') + months + ' tháng';
+                        }
+                        %>
+                        <tr>
+                            <td>
+                                <%= p.id %>
+                            </td>
+                            <td>
+                                <%= p.ten_nha_may %>
+                            </td>
+                            <td>
+                                <%= p.cong_suat %>
+                            </td>
+                            <td>
+                                <span
+                                    class="badge <%= p.trang_thai === 'Hoạt động' ? 'badge-active' : p.trang_thai === 'Bảo trì' ? 'badge-maintenance' : 'badge-stopped' %>">
+                                    <%= p.trang_thai %>
+                                </span>
+                            </td>
+                            <td>
+                                <%= p.ngay_hoat_dong ? new Date(p.ngay_hoat_dong).toLocaleDateString('vi-VN')
+                                    : 'Chưa cập nhật' %>
+                            </td>
+                            <td>
+                                <%= thoiGian %>
+                            </td>
+                            <td>
+                                <% if (user && (user.role==="admin" || user.id===p.owner_id)) { %>
+                                    <a href="/nhamay/sua/<%= p.id %>" class="action-btn btn-edit">Sửa</a>
+                                    <button class="action-btn btn-delete" onclick="xoa(<%= p.id %>)">Xoá</button>
+                                    <% } else { %>
+                                        <span style="color: gray;">Chỉ xem</span>
+                                        <% } %>
+                            </td>
+                        </tr>
+                        <% }) %>
             </tbody>
         </table>
-
     </div>
-
 
     <script src="/scripts/danhsach.js"></script>
 

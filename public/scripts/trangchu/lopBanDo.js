@@ -1,4 +1,4 @@
-export function taoLayer(map) {
+export function taoLayer(map, baseMaps) {
   const wmsLayer = L.tileLayer
     .wms("http://localhost:8080/geoserver/nhamay/wms", {
       layers: "nhamay:nhamay_dien",
@@ -17,5 +17,11 @@ export function taoLayer(map) {
     })
     .addTo(map);
 
+  const overlayMaps = {
+    "Nhà máy điện (điểm)": wmsLayer,
+    "Vùng nhà máy (polygon)": polygonLayer,
+  };
+
+  L.control.layers(baseMaps, overlayMaps).addTo(map);
   return { wmsLayer, polygonLayer };
 }

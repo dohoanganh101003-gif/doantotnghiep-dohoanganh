@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Lịch sử hoạt động</title>
+    <link rel="stylesheet" href="/css/lichsu.css">
+</head>
+
+<body>
+
+    <div class="header">
+        <h2>Lịch sử hoạt động</h2>
+        <div>
+            <a href="/" class="btn">Trang chủ</a>
+            <a href="/nhamay" class="btn">Danh sách</a>
+        </div>
+    </div>
+
+    <div class="filter-bar">
+        <span class="filter-hint">Bấm vào tên nhà máy để xem lịch sử, chọn mốc thời gian bên trong để lọc chi
+            tiết</span>
+    </div>
+
+    <div class="table-container">
+        <% if (plants.length===0) { %>
+            <div class="empty">Không có dữ liệu.</div>
+            <% } else { %>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width:40px"></th>
+                            <th>Tên nhà máy</th>
+                            <th>Trạng thái</th>
+                            <th>Công suất (MW)</th>
+                            <th>Khu vực</th>
+                            <% if (user && (user.role==='admin' || user.role==='owner' )) { %>
+                                <th>Tổng log</th>
+                                <% } %>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% plants.forEach(p=> { %>
+                            <% var trangThaiClass='' ; if (p.trang_thai==='Hoạt động' ) trangThaiClass='badge-active' ;
+                                else if (p.trang_thai==='Bảo trì' ) trangThaiClass='badge-maintenance' ; else if
+                                (p.trang_thai==='Ngừng' ) trangThaiClass='badge-stopped' ; var colspan=user &&
+                                (user.role==='admin' || user.role==='owner' ) ? 6 : 5; %>
+
+                                <!-- HÀNG CHÍNH -->
+                                <tr class="plant-row" data-id="<%= p.id %>" data-open="false">
+                                    <td class="toggle-icon">▶</td>
+                                    <td class="col-name">
+                                        <%= p.ten_nha_may %>
+                                    </td>
+                                    <td><span class="badge <%= trangThaiClass %>">
+                                            <%= p.trang_thai %>
+                                        </span></td>
+                                    <td>
+                                        <%= p.cong_suat %>
+                                    </td>
+                                    <td>
+                                        <%= p.khu_vuc || '—' %>
+                                    </td>
+                                    <% if (user && (user.role==='admin' || user.role==='owner' )) { %>
+                                        <td>
+                                            <%= p.tong_log || 0 %>
+                                        </td>
+                                        <% } %>
+                                </tr>
+
+                                <!-- HÀNG LOG -->
+                                <tr class="log-row" id="log-<%= p.id %>" style="display:none;">
+                                    <td colspan="<%= colspan %>">
+                                        <div class="log-container">
+
+                                            <!-- Filter thời gian nằm bên trong từng nhà máy -->
+                                            <div class="inner-filter">
+                                                <span>Lọc theo thời gian:</span>
+                                                <input type="date" class="tu-ngay" id="tu_ngay_<%= p.id %>">
+                                                <span>→</span>
+                                                <input type="date" class="den-ngay" id="den_ngay_<%= p.id %>">
+                                                <button class="btn-loc" data-id="<%= p.id %>">Lọc</button>
+                                                <button class="btn-xoa-loc" data-id="<%= p.id %>">Xoá lọc</button>
+                                            </div>
+
+                                            <div class="log-content" id="log-content-<%= p.id %>">
+                                                <div class="log-loading">Đang tải...</div>
+                                            </div>
+
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <% }) %>
+                    </tbody>
+                </table>
+                <% } %>
+    </div>
+    <!-- ✅ Truyền biến từ server sang JS qua window -->
+    <script>
+        window.__isAdminOrOwner__ = <%= user && (user.role === 'admin' || user.role === 'owner') ? 'true' : 'false' %>;
+    </script>
+    <script src="/scripts/lichsunhamay.js"></script>
+
+</body>
+
+</html>

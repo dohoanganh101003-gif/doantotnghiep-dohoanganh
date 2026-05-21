@@ -1,7 +1,7 @@
 .status {
     padding: 4px 10px;
     border-radius: 10px;
-    font-size: 13px;
+    font-size: 14px;
 }
 
 .pending {
@@ -44,4 +44,133 @@ select {
     padding: 4px;
     border-radius: 6px;
     margin-bottom: 5px;
+}
+/* ===== Modal overlay ===== */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+.modal-overlay.active {
+    display: flex;
+}
+ 
+/* ===== Modal box ===== */
+.modal {
+    background: #fff;
+    border-radius: 10px;
+    padding: 32px 28px 24px;
+    width: 100%;
+    max-width: 420px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+    position: relative;
+}
+.modal h3 {
+    margin: 0 0 20px;
+    font-size: 1.2rem;
+    color: #1e293b;
+}
+.modal-close {
+    position: absolute;
+    top: 14px;
+    right: 18px;
+    background: none;
+    border: none;
+    font-size: 1.4rem;
+    cursor: pointer;
+    color: #64748b;
+    line-height: 1;
+}
+.modal-close:hover {
+    color: #ef4444;
+}
+ 
+/* ===== Form inside modal ===== */
+.modal-form .field {
+    margin-bottom: 14px;
+}
+.modal-form label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #475569;
+    margin-bottom: 5px;
+}
+.modal-form input,
+.modal-form select {
+    width: 100%;
+    padding: 9px 11px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+}
+.modal-form input:focus,
+.modal-form select:focus {
+    outline: none;
+    border-color: #6366f1;
+}
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+.btn-cancel {
+    padding: 8px 18px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    background: #f1f5f9;
+    color: #475569;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+.btn-cancel:hover {
+    background: #e2e8f0;
+}
+.btn-submit {
+    padding: 8px 18px;
+    border: none;
+    border-radius: 6px;
+    background: #6366f1;
+    color: #fff;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+.btn-submit:hover {
+    background: #4f46e5;
+}
+.btn-submit:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+ 
+/* ===== Toast notification ===== */
+.toast {
+    display: none;
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    z-index: 2000;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+}
+.toast.success {
+    background: #22c55e;
+    color: #fff;
+    display: block;
+}
+.toast.error {
+    background: #ef4444;
+    color: #fff;
+    display: block;
 }

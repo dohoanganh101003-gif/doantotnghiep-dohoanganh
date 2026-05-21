@@ -29,6 +29,11 @@
                     <option value="Ngừng" <%=plant.trang_thai==="Ngừng" ? "selected" : "" %>>Ngừng</option>
                 </select>
 
+                <label for="ngay_hoat_dong">Ngày bắt đầu hoạt động</label>
+                <input type="date" id="ngay_hoat_dong" name="ngay_hoat_dong" value="<%= plant.ngay_hoat_dong
+                        ? new Date(plant.ngay_hoat_dong).toISOString().split('T')[0]
+                        : '' %>">
+
                 <select name="tinh" id="tinh" required onchange="updateRegion()">
                     <option value="">-- Chọn tỉnh/thành --</option>
 

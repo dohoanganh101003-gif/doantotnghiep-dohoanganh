@@ -2,6 +2,7 @@ import { fetchFeatureInfo } from "./api.js";
 
 export function ganSuKienBanDo(map) {
   let highlightLayer = null;
+  let hoverTimeout = null;
 
   function buildUrl(latlng) {
     const bbox = map.getBounds().toBBoxString();
@@ -18,64 +19,101 @@ export function ganSuKienBanDo(map) {
     );
   }
 
-  // CLICK
-  map.on("click", async (e) => {
-    const data = await fetchFeatureInfo(buildUrl(e.latlng));
-    if (!data.features?.length) return;
+  function tinhThoiGian(ngay_hoat_dong) {
+    if (!ngay_hoat_dong) return "Chưa cập nhật";
+    const ms = Date.now() - new Date(ngay_hoat_dong);
+    const years = Math.floor(ms / (1000 * 60 * 60 * 24 * 365));
+    const months = Math.floor(
+      (ms % (1000 * 60 * 60 * 24 * 365)) / (1000 * 60 * 60 * 24 * 30),
+    );
+    return (years > 0 ? years + " năm " : "") + months + " tháng";
+  }
 
-    const feature = data.features[0];
-    const f = feature.properties;
+  function buildPopup(f) {
+    const statusClass = (f.trang_thai || "").toLowerCase().replace(/\s+/g, "-");
 
-    if (highlightLayer) map.removeLayer(highlightLayer);
-
-    highlightLayer = L.geoJSON(feature, {
-      style: { color: "yellow", weight: 3, fillOpacity: 0.3 },
-    }).addTo(map);
-
-    map.fitBounds(highlightLayer.getBounds());
-
-    const statusClass = f.trang_thai.toLowerCase().replace(/\s+/g, "-");
-
-    const popup = `
+    return `
       <div class="popup-card">
-        <div class="popup-header">${f.ten_nha_may}</div>
+ 
+        <div class="popup-header">${f.ten_nha_may || "Không rõ"}</div>
+ 
+        ${
+          f.image
+            ? `
+          <div class="popup-image">
+            <img src="http://localhost:3004${f.image}" alt="${f.ten_nha_may}">
+          </div>`
+            : ""
+        }
+ 
         <div class="popup-body">
-          ${
-            f.image
-              ? `
-            <div class="popup-image">
-              <img src="http://localhost:3004${f.image}">
-            </div>`
-              : ""
-          }
+ 
           <div class="popup-row">
-            <span>🏭 Công suất:</span>
-            <b>${f.cong_suat} MW</b>
+            <span>🏭 Công suất</span>
+            <b>${f.cong_suat ?? "N/A"} MW</b>
           </div>
+ 
           <div class="popup-row">
-            <span>📍 Trạng thái:</span>
-            <b class="status ${statusClass}">${f.trang_thai}</b>
+            <span>📍 Trạng thái</span>
+            <span class="status ${statusClass}">${f.trang_thai || "N/A"}</span>
           </div>
+ 
+          <div class="popup-row">
+            <span>⏱ Thời gian HĐ</span>
+            <b>${tinhThoiGian(f.ngay_hoat_dong)}</b>
+          </div>
+ 
         </div>
       </div>
     `;
+  }
 
-    L.popup({ className: "custom-popup" })
-      .setLatLng(e.latlng)
-      .setContent(popup)
-      .openOn(map);
-  });
+  map.on("click", async (e) => {
+    try {
+      const data = await fetchFeatureInfo(buildUrl(e.latlng));
+      if (!data.features?.length) return;
 
-  // HOVER
-  map.on("mousemove", async (e) => {
-    const data = await fetchFeatureInfo(buildUrl(e.latlng));
+      const feature = data.features[0];
+      const f = feature.properties;
 
-    if (!data.features?.length) {
-      map.getContainer().title = "";
-      return;
+      if (highlightLayer) map.removeLayer(highlightLayer);
+
+      highlightLayer = L.geoJSON(feature, {
+        style: { color: "#3b82f6", weight: 3, fillOpacity: 0.15 },
+      }).addTo(map);
+
+      map.fitBounds(highlightLayer.getBounds());
+
+      L.popup({ className: "custom-popup", maxHeight: 400 })
+        .setLatLng(e.latlng)
+        .setContent(buildPopup(f))
+        .openOn(map);
+    } catch (err) {
+      console.error("Lỗi click bản đồ:", err);
     }
-
-    const f = data.features[0].properties;
-    map.getContainer().title = `${f.ten_nha_may} - ${f.trang_thai}`;
   });
+
+  map.on("mousemove", (e) => {
+    clearTimeout(hoverTimeout);
+    hoverTimeout = setTimeout(async () => {
+      try {
+        const data = await fetchFeatureInfo(buildUrl(e.latlng));
+        if (!data.features?.length) {
+          map.getContainer().title = "";
+          return;
+        }
+        const f = data.features[0].properties;
+        map.getContainer().title = `${f.ten_nha_may} — ${f.trang_thai}`;
+      } catch (_) {}
+    }, 300);
+  });
+  return {
+    clearHighlight: () => {
+      if (highlightLayer) {
+        map.removeLayer(highlightLayer);
+        highlightLayer = null;
+      }
+      map.closePopup(); // đóng popup nếu đang mở
+    },
+  };
 }

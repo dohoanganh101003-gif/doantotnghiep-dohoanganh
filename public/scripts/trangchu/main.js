@@ -6,13 +6,13 @@ import { khoiTaoThongKe } from "./thongKe.js";
 import { initGiaoDien } from "./giaoDien.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-  const map = khoiTaoBanDo();
+  const { map, baseMaps } = khoiTaoBanDo(); // ✅ destructure thêm baseMaps
 
-  const { wmsLayer, polygonLayer } = taoLayer(map);
+  const { wmsLayer, polygonLayer } = taoLayer(map, baseMaps); // ✅ truyền baseMaps
 
-  ganSuKienBanDo(map);
+  const { clearHighlight } = ganSuKienBanDo(map); // ✅ nhận về
 
-  khoiTaoTimKiem(map);
+  khoiTaoTimKiem(map, clearHighlight); // ✅ truyền vào
 
   khoiTaoThongKe();
 

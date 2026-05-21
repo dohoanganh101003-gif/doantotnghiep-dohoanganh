@@ -32,6 +32,10 @@ document.addEventListener("DOMContentLoaded", function () {
     formData.append("khu_vuc", document.getElementById("khu_vuc").value);
     formData.append("lat", document.getElementById("lat").value);
     formData.append("lng", document.getElementById("lng").value);
+    formData.append(
+      "ngay_hoat_dong",
+      document.getElementById("ngay_hoat_dong").value,
+    ); // ✅ thêm dòng này
 
     const file = document.getElementById("image").files[0];
     if (file) {

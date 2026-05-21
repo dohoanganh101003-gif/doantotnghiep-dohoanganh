@@ -1,5 +1,4 @@
 export function initGiaoDien(map, wmsLayer, polygonLayer) {
-  // ===== SIDEBAR =====
   const toggleBtn = document.getElementById("toggleBtn");
   const sidebar = document.getElementById("sidebar");
 
@@ -11,7 +10,6 @@ export function initGiaoDien(map, wmsLayer, polygonLayer) {
     }, 300);
   });
 
-  // ===== TOGGLE LAYER =====
   const togglePoint = document.getElementById("togglePoint");
   const togglePolygon = document.getElementById("togglePolygon");
 
@@ -29,5 +27,14 @@ export function initGiaoDien(map, wmsLayer, polygonLayer) {
     } else {
       map.removeLayer(polygonLayer);
     }
+  });
+  map.on("overlayadd", (e) => {
+    if (e.layer === wmsLayer) togglePoint.checked = true;
+    if (e.layer === polygonLayer) togglePolygon.checked = true;
+  });
+
+  map.on("overlayremove", (e) => {
+    if (e.layer === wmsLayer) togglePoint.checked = false;
+    if (e.layer === polygonLayer) togglePolygon.checked = false;
   });
 }
