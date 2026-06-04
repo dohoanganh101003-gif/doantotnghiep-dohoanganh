@@ -253,7 +253,6 @@ body {
   width: 260px;
 }
  
-/* Header */
 .popup-header {
   background: linear-gradient(135deg, #1e40af, #3b82f6);
   color: white;
@@ -278,7 +277,6 @@ body {
   display: block;
 }
  
-/* Body */
 .popup-body {
   padding: 12px 14px;
   background: #fff;
@@ -287,7 +285,6 @@ body {
   gap: 8px;
 }
  
-/* Row thông tin */
 .popup-row {
   display: flex;
   justify-content: space-between;
@@ -305,7 +302,6 @@ body {
   color: #111827;
 }
  
-/* Badge trạng thái */
 .status {
   display: inline-block;
   padding: 2px 10px;
@@ -329,14 +325,12 @@ body {
   color: #991b1b;
 }
  
-/* Divider */
 .popup-divider {
   height: 1px;
   background: #f1f5f9;
   margin: 2px 0;
 }
  
-/* Section lịch sử */
 .popup-section-title {
   font-size: 12px;
   font-weight: 700;
@@ -400,7 +394,82 @@ body {
   text-align: center;
   padding: 8px 0;
 }
+.legend-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+}
 
+.legend-icon-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: white;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.18);
+  transition: all 0.2s ease;
+}
+
+.legend-icon-btn:hover {
+  background: #f1f5f9;
+  transform: scale(1.05);
+}
+
+.legend-popup {
+  background: white;
+  border-radius: 10px;
+  padding: 12px 15px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.18);
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: 13px;
+  min-width: 170px;
+  transform-origin: bottom right;
+  animation: legendFadeIn 0.2s ease;
+}
+
+.legend-popup.hidden {
+  display: none;
+}
+
+@keyframes legendFadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.legend-title {
+  font-weight: 700;
+  font-size: 11px;
+  color: #3b82f6;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  margin-bottom: 6px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #374151;
+  margin-bottom: 4px;
+}
+
+.legend-dot {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.legend-divider {
+  border-top: 1px solid #e2e8f0;
+  margin: 8px 0;
+}
 
 
 

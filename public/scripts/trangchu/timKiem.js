@@ -1,7 +1,6 @@
 import { fetchSearch } from "./api.js";
 
 export function khoiTaoTimKiem(map, clearHighlight) {
-  // ✅ nhận thêm tham số
   const input = document.getElementById("search");
   const btnSearch = document.getElementById("btnSearch");
   const btnReset = document.getElementById("btnReset");
@@ -55,13 +54,11 @@ export function khoiTaoTimKiem(map, clearHighlight) {
   }
 
   function handleReset() {
-    // ✅ Xoá marker tìm kiếm
     if (searchLayer) {
       map.removeLayer(searchLayer);
       searchLayer = null;
     }
 
-    // ✅ Xoá highlight + đóng popup
     if (clearHighlight) clearHighlight();
 
     input.value = "";

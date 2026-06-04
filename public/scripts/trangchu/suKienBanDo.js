@@ -113,7 +113,7 @@ export function ganSuKienBanDo(map) {
         map.removeLayer(highlightLayer);
         highlightLayer = null;
       }
-      map.closePopup(); // đóng popup nếu đang mở
+      map.closePopup();
     },
   };
 }

@@ -82,7 +82,6 @@ async function loadAndRender(plantId, tuNgay = "", denNgay = "") {
   }
 }
 
-// ✅ Gắn sự kiện cho từng hàng nhà máy
 document.querySelectorAll(".plant-row").forEach((row) => {
   row.addEventListener("click", async (e) => {
     // Bỏ qua nếu click vào button hoặc input bên trong log-row
@@ -94,13 +93,11 @@ document.querySelectorAll(".plant-row").forEach((row) => {
     const isOpen = row.dataset.open === "true";
 
     if (isOpen) {
-      // ✅ Đóng
       logRow.style.display = "none";
       row.dataset.open = "false";
       icon.textContent = "▶";
       row.classList.remove("row-active");
     } else {
-      // ✅ Mở — load log không có filter thời gian
       logRow.style.display = "table-row";
       row.dataset.open = "true";
       icon.textContent = "▼";
@@ -111,7 +108,6 @@ document.querySelectorAll(".plant-row").forEach((row) => {
   });
 });
 
-// ✅ Nút "Lọc" bên trong từng nhà máy
 document.querySelectorAll(".btn-loc").forEach((btn) => {
   btn.addEventListener("click", async (e) => {
     e.stopPropagation(); // không kích hoạt toggle
@@ -122,7 +118,6 @@ document.querySelectorAll(".btn-loc").forEach((btn) => {
   });
 });
 
-// ✅ Nút "Xoá lọc" — reset về xem toàn bộ
 document.querySelectorAll(".btn-xoa-loc").forEach((btn) => {
   btn.addEventListener("click", async (e) => {
     e.stopPropagation();

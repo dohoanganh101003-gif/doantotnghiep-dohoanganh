@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
   map.on("click", function (e) {
     const lat = e.latlng.lat;
     const lng = e.latlng.lng;
-    console.log("Clicked:", lat, lng); // 👈 THÊM DÒNG NÀY
+    console.log("Clicked:", lat, lng);
 
     document.getElementById("lat").value = lat.toFixed(6);
     document.getElementById("lng").value = lng.toFixed(6);

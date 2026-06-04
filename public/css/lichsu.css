@@ -4,7 +4,6 @@ body {
   background: #f8fafc;
 }
  
-/* ========== HEADER ========== */
 .header {
   height: 60px;
   background: #1e293b;
@@ -80,7 +79,6 @@ body {
   font-style: italic;
 }
  
-/* ========== BẢNG CHÍNH ========== */
 .table-container {
   padding: 30px;
 }
@@ -117,7 +115,6 @@ th {
   letter-spacing: 0.2px;
 }
  
-/* ========== ACCORDION - HÀNG NHÀ MÁY ========== */
 .plant-row {
   cursor: pointer;
   transition: background 0.15s;
@@ -154,7 +151,6 @@ th {
   text-align: left;
 }
  
-/* ========== HÀNG LOG (ẩn mặc định) ========== */
 .log-row {
   background: #f8fafc;
 }
@@ -182,7 +178,6 @@ th {
   padding: 16px 0;
 }
  
-/* ========== BẢNG LOG BÊN TRONG ========== */
 .log-table {
   width: 100%;
   border-collapse: collapse;
@@ -230,7 +225,6 @@ th {
   max-width: 260px;
 }
  
-/* ========== FILTER BÊN TRONG TỪNG NHÀ MÁY ========== */
 .inner-filter {
   display: flex;
   align-items: center;
@@ -284,13 +278,11 @@ th {
  
 .btn-xoa-loc:hover { background: #e2e8f0; }
  
-/* Hàng đang mở */
 .row-active {
   background: #dbeafe !important;
   font-weight: 600;
 }
  
-/* ========== BADGE TRẠNG THÁI ========== */
 .badge {
   display: inline-block;
   padding: 4px 14px;
@@ -304,7 +296,6 @@ th {
 .badge-maintenance { background: #fef9c3; color: #854d0e; }
 .badge-stopped     { background: #fee2e2; color: #991b1b; }
  
-/* ========== ACTION TAG ========== */
 .action-tag {
   display: inline-block;
   padding: 3px 12px;

@@ -1,5 +1,5 @@
 const PlantModel = require("../../models/plant/plantCrudModel");
-const LogModel = require("../../models/plant/plantLogModel"); // ✅ thêm
+const LogModel = require("../../models/plant/plantLogModel");
 
 module.exports = {
   getAll: async (req, res) => {
@@ -94,7 +94,6 @@ module.exports = {
 
       await PlantModel.update(id, data);
 
-      // ✅ Ghi log — ghi rõ nếu đổi trạng thái
       const ghi_chu =
         plant.trang_thai !== data.trang_thai
           ? `Đổi trạng thái: ${plant.trang_thai} → ${data.trang_thai}`

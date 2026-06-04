@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", function () {
     formData.append(
       "ngay_hoat_dong",
       document.getElementById("ngay_hoat_dong").value,
-    ); // ✅ thêm dòng này
+    );
 
     const file = document.getElementById("image").files[0];
     if (file) {

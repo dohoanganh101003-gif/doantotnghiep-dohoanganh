@@ -29,10 +29,6 @@ module.exports = {
     );
   },
 
-  // =============================================
-  // TRANG LỊCH SỬ - Lấy danh sách nhà máy
-  // admin: tất cả, owner: của mình
-  // =============================================
   getPlantList: async (role, owner_id) => {
     if (role === "admin") {
       const result = await pool.query(`
@@ -84,11 +80,6 @@ module.exports = {
     }
   },
 
-  // =============================================
-  // TRANG LỊCH SỬ - Lazy load log khi bấm mở nhà máy
-  // admin/owner: đầy đủ action, ghi chú, người thực hiện
-  // user thường: chỉ thấy trạng thái + thời gian
-  // =============================================
   getLogsByPlantAndTime: async ({
     plantId,
     tu_ngay,

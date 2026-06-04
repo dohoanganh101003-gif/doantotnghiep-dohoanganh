@@ -68,12 +68,10 @@
                                         <% } %>
                                 </tr>
 
-                                <!-- HÀNG LOG -->
                                 <tr class="log-row" id="log-<%= p.id %>" style="display:none;">
                                     <td colspan="<%= colspan %>">
                                         <div class="log-container">
 
-                                            <!-- Filter thời gian nằm bên trong từng nhà máy -->
                                             <div class="inner-filter">
                                                 <span>Lọc theo thời gian:</span>
                                                 <input type="date" class="tu-ngay" id="tu_ngay_<%= p.id %>">
@@ -96,7 +94,6 @@
                 </table>
                 <% } %>
     </div>
-    <!-- ✅ Truyền biến từ server sang JS qua window -->
     <script>
         window.__isAdminOrOwner__ = <%= user && (user.role === 'admin' || user.role === 'owner') ? 'true' : 'false' %>;
     </script>

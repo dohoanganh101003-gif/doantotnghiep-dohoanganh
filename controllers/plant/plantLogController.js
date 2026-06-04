@@ -2,9 +2,6 @@ const LogModel = require("../../models/plant/plantLogModel");
 const PlantModel = require("../../models/plant/plantCrudModel");
 
 module.exports = {
-  // =============================================
-  // API: lấy log theo nhà máy (dùng cho popup bản đồ)
-  // =============================================
   getLogs: async (req, res) => {
     try {
       const { id } = req.params;
@@ -29,9 +26,6 @@ module.exports = {
     }
   },
 
-  // =============================================
-  // PAGE: trang lịch sử — hiển thị danh sách nhà máy
-  // =============================================
   pageList: async (req, res) => {
     try {
       const user = req.session.user;
@@ -49,10 +43,6 @@ module.exports = {
     }
   },
 
-  // =============================================
-  // API: lazy load log khi bấm mở nhà máy
-  // GET /api/plants/:id/logs?tu_ngay=...&den_ngay=...
-  // =============================================
   getLogsLazy: async (req, res) => {
     try {
       const user = req.session.user;
